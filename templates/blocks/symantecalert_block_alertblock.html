@@ -1,0 +1,96 @@
+<script src="http://securityresponse.symantec.com/avcenter/js/vir.js"></script>
+<script src="http://securityresponse.symantec.com/avcenter/js/tools.js"></script>
+<script src="http://securityresponse.symantec.com/avcenter/js/advis.js"></script>
+<script>
+/* defaults */
+var symLmax = <{$block.symLmax}>;
+var symRmax = <{$block.symRmax}>;
+var symAmax = <{$block.symAmax}>;
+
+var symTshow = <{$block.symTshow}>;
+var symSshow = <{$block.symSshow}>;
+
+
+function symDisplay() {
+
+        r_style = new Array(6);
+        r_style[1] = 'style="font-weight:bold; width:12px; border-width:1px; border-style:solid; background:#4444dd;"';
+        r_style[2] = 'style="font-weight:bold; width:12px; border-width:1px; border-style:solid; background:#00cc00;"';
+        r_style[3] = 'style="font-weight:bold; width:12px; border-width:1px; border-style:solid; background:#ddaa00;"';
+        r_style[4] = 'style="font-weight:bold; width:12px; border-width:1px; border-style:solid; background:#dd6600;"';
+        r_style[5] = 'style="font-weight:bold; width:12px; border-width:1px; border-style:solid; background:#dd0000;"';
+
+        /* header */
+        /* latest threats */
+        if ( symLmax > 0 ) {
+                document.writeln('     <b><{$block.lang_latestthreats}></b><br>');
+                for ( i=0; i<symLmax; i++ ) {
+
+                        var full_url = 'http://securityresponse.symantec.com/avcenter/venc/data/'+symLurls[i];
+
+                        document.writeln('     <span '+r_style[symLrisks[i]]+' >&nbsp;'+symLrisks[i]+'&nbsp;</span>');
+                        document.writeln('     <a href="'+full_url+'">'+symLnames[i]+'</a><br>');
+                }
+         }
+
+        /* top threats */
+        if ( symTshow > 0 ) {
+
+                document.writeln('     <br><b><{$block.lang_topthreats}></b><br>');
+                for ( i=0; i<(symTurls.length-1); i++ ) {
+
+                        var full_url = 'http://securityresponse.symantec.com/avcenter/venc/data/'+symTurls[i];
+
+                        document.writeln('     <span '+r_style[symTrisks[i]]+' >&nbsp;'+symTrisks[i]+'&nbsp;</span>');
+                        document.writeln('     <a href="'+full_url+'">'+symTnames[i]+'</a><br>');
+                }
+        }
+
+        /* removal tools */
+        if ( symRmax > 0 ) {
+
+                document.writeln('     <br><b><{$block.lang_removal}></b><br>');
+                document.writeln('<ul>');
+                for ( i=0; i<symRmax; i++ ) {
+
+                        var full_url = 'http://securityresponse.symantec.com/avcenter/venc/data/'+symRurls[i];
+
+                        document.writeln('    <li><a href="'+full_url+'">'+symRnames[i]+'</a>');
+                }
+                document.writeln('</ul>');
+        }
+
+        /* advisories */
+        if ( symAmax > 0 ) {
+
+                document.writeln('     <br><b><{$block.lang_security}></b><br>');
+                document.writeln('<ul>');
+                for ( i=0; i<symAmax; i++ ) {
+
+                        var full_url = 'http://securityresponse.symantec.com/avcenter/security/Content/'+symAurls[i];
+
+
+                        document.writeln('     <li><a href="'+full_url+'">'+symAnames[i]+'</a>');
+                }
+                document.writeln('</ul>');
+        }
+
+        /* search box */
+        if ( symSshow > 0 ) {
+
+                document.writeln('     <br><b><{$block.lang_searchsarc}></b><br>');
+                document.writeln('      <form style="margin-bottom:0;" action="http://search.symantec.com/custom/us/query.html" method="POST" target="_blank">');
+                document.writeln('      <input type="hidden" name="lk" value="1">');
+                document.writeln('      <input type="hidden" name="rf" value="0">');
+                document.writeln('      <input type="hidden" name="qp" value="url:/avcenter/venc/data/ url:/avcenter/venc/dyn/ url:/avcenter/security/ url:/avcenter/sirc/">');
+                document.writeln('      <input type=text name="qt" size=12>&nbsp;<input type=submit value="<{$block.lang_submit}>">');
+                document.writeln('      </form>');
+        }
+
+        /* footer */
+        document.writeln('    <br>');
+        document.writeln('    <div align="center"><a href="http://securityresponse.symantec.com/avcenter/cgi-bin/syndicate.cgi"><{$block.lang_usefeed}></a></div>');
+
+}
+symDisplay();
+</script>
